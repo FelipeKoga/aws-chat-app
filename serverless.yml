@@ -18,3 +18,6 @@ custom:
 
 functions:
     - ${file(src/functions/serverless.yml)}
+
+resources:
+    - ${file(resources/dynamodb.yml)}
