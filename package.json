@@ -4,7 +4,11 @@
   "main": "index.js",
   "author": "koga <kosloski.fkoga@gmail.com>",
   "license": "MIT",
-
+  "scripts": {
+    "dev": "serverless offline",
+    "deploy": "serverless deploy --verbose",
+    "deploy-function": "serverless deploy function --function"
+  },
   "dependencies": {
     "@middy/core": "^1.5.2",
     "@middy/http-json-body-parser": "^1.5.2"
@@ -14,6 +18,7 @@
     "@types/aws-lambda": "^8.10.71",
     "@types/node": "^14.14.25",
     "aws-sdk": "^2.933.0",
+    "dotenv-load": "^2.0.0",
     "eslint": "^7.29.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-config-prettier": "^8.3.0",
