@@ -1,10 +1,21 @@
-## A simple realtime chat application using serverless framework with aws
+## A realtime chat application using Serverless Framework and AWS
 
--   cognito
--   lambda (nodejs + typescript)
--   api gateway (rest and websocket)
--   dynamodb: single table design
+# Services
+
+-   Cognito
+-   Lambda (nodejs + typescript)
+-   API Gateway (rest and websocket)
+-   Dynamodb: single table design
 -   SNS
+-   S3
+
+# Features
+
+-   [] Register an user
+-   [] Start a conversation (send and receive messages)
+-   [] Send notifications
+-   [] Private groups
+-   [] Send files and audios
 
 ## How to test
 
