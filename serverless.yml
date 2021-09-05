@@ -4,7 +4,7 @@ provider:
     region: us-east-1
     lambdaHashingVersion: '20201221'
 
-service: realtime-chat-app
+service: chatapp
 useDotenv: true
 
 plugins:
