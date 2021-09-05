@@ -11,9 +11,9 @@
 
 ### Features
 
--   [ ] Register an user
--   [ ] Start a conversation (send and receive messages)
--   [ ] Send notifications
+-   [ ] Registration
+-   [ ] Start a conversation
+-   [ ] Notifications
 -   [ ] Private groups
 -   [ ] Send files and audios
 
