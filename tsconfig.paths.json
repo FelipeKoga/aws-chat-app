@@ -3,7 +3,7 @@
       "baseUrl": ".",
       "paths": {
         "@functions/*": ["src/functions/*"],
-        "@shared/*": ["src/shared/*"]
+        "@shared/*": ["src/shared/*"],
       }
     }
   }

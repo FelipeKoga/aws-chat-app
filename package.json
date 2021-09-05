@@ -11,7 +11,9 @@
   },
   "dependencies": {
     "@middy/core": "^1.5.2",
-    "@middy/http-json-body-parser": "^1.5.2"
+    "@middy/http-json-body-parser": "^1.5.2",
+    "tsyringe": "^4.6.0",
+    "reflect-metadata": "^0.1.13"
   },
   "devDependencies": {
     "@serverless/typescript": "^2.23.0",
