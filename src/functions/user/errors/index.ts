@@ -8,24 +8,21 @@ export class BaseError extends Error {
         this.statusCode = statusCode;
     }
 }
-
 export class UserAlreadyExists extends BaseError {
     constructor(message: string) {
         super(409, message);
-        this.name = UserAlreadyExists.name;
+        this.name = 'UserAlreadyExists';
     }
 }
-
 export class NotFound extends BaseError {
     constructor(message: string) {
         super(404, message);
-        this.name = NotFound.name;
+        this.name = 'NotFound';
     }
 }
-
 export class UnknowError extends BaseError {
     constructor(message: string) {
         super(500, message);
-        this.name = UnknowError.name;
+        this.name = 'UnknowError';
     }
 }
