@@ -23,3 +23,5 @@ resources:
     - ${file(resources/roles.yml)}
     - ${file(resources/policies.yml)}
     - ${file(resources/dynamodb.yml)}
+    - ${file(resources/cognito.yml)}
+    - ${file(resources/cognito-identity-pool.yml)}

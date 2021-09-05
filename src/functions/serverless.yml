@@ -1,6 +1,6 @@
 user:
     handler: ./src/functions/user/index.handle
-    role: DataRole
+    role: CognitoDataRole
     events:
         - http:
               path: user
@@ -11,3 +11,5 @@ user:
               path: user/{email}
               method: GET
               cors: true
+    environment:
+        USER_POOL_ID: !Ref CognitoUserPool

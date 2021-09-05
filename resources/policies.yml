@@ -19,3 +19,19 @@ Resources:
                           - arn:aws:dynamodb:us-east-1:603366505042:table/realtime-chat-table
             Roles:
                 - !Ref DataRole
+                - !Ref CognitoDataRole
+
+    CognitoPolicy:
+        Type: AWS::IAM::Policy
+        Properties:
+            PolicyName: cognito-policy
+            PolicyDocument:
+                Version: '2012-10-17'
+                Statement:
+                    - Effect: Allow
+                      Action:
+                          - cognito-idp:AdminCreateUser
+                          - cognito-idp:AdminSetUserPassword
+                      Resource: '*'
+            Roles:
+                - !Ref CognitoDataRole
