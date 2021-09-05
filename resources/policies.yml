@@ -1,0 +1,21 @@
+Resources:
+    DynamoPolicy:
+        Type: AWS::IAM::Policy
+        Properties:
+            PolicyName: dynamo-policy
+            PolicyDocument:
+                Version: '2012-10-17'
+                Statement:
+                    - Effect: Allow
+                      Action: dynamodb:Query
+                      Resource:
+                          - arn:aws:dynamodb:us-east-1:603366505042:table/realtime-chat-table/index/*
+                    - Effect: Allow
+                      Action:
+                          - dynamodb:Query
+                          - dynamodb:PutItem
+                          - dynamodb:GetItem
+                      Resource:
+                          - arn:aws:dynamodb:us-east-1:603366505042:table/realtime-chat-table
+            Roles:
+                - !Ref DataRole

@@ -1,2 +1,3 @@
 user:
-  handler: ./src/functions/user/index.handle
+    handler: ./src/functions/user/index.handle
+    role: DataRole
