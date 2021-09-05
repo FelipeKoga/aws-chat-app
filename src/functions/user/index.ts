@@ -4,7 +4,9 @@ import './di/module';
 
 import { container } from 'tsyringe';
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
+import { formatResponse } from '@shared/apiGatewayResponse';
 import { CreateUserUseCase, GetUserUseCase } from './usecases';
+import { BaseError } from './errors';
 
 const createUser = async (body: string): Promise<APIGatewayProxyResult> => {
     const { email, name } = JSON.parse(body);
@@ -15,10 +17,7 @@ const createUser = async (body: string): Promise<APIGatewayProxyResult> => {
 
     await createUserUseCase.invoke(user);
 
-    return {
-        statusCode: 201,
-        body: JSON.stringify(user),
-    };
+    return formatResponse({ statusCode: 201, body: user });
 };
 
 const getUser = async ({ email }): Promise<APIGatewayProxyResult> => {
@@ -26,17 +25,35 @@ const getUser = async ({ email }): Promise<APIGatewayProxyResult> => {
 
     const user = await getUserUseCase.invoke({ email });
 
-    return {
-        statusCode: 200,
-        body: JSON.stringify(user),
-    };
+    return formatResponse({ statusCode: 200, body: user });
 };
 
 export const handle = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
-    switch (event.httpMethod) {
-    case 'POST': return createUser(event.body);
-    case 'GET': return getUser(event.pathParameters as { email: string });
+    try {
+        let response: APIGatewayProxyResult;
 
-    default: throw new Error('Method not allowed');
+        if (event.httpMethod === 'POST') {
+            response = await createUser(event.body);
+        }
+
+        if (event.httpMethod === 'GET') {
+            response = await getUser(event.pathParameters as { email: string });
+        }
+
+        return response;
+    } catch (exception) {
+        if (exception instanceof BaseError) {
+            const { statusCode, name, message } = exception;
+
+            return formatResponse({
+                statusCode,
+                body: {
+                    name,
+                    message,
+                },
+            });
+        }
+
+        return exception;
     }
 };

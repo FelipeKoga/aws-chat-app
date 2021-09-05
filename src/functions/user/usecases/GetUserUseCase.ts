@@ -1,6 +1,7 @@
 import { IUseCase } from '@shared/IUseCase';
 import User from '@shared/models/User';
 import { inject, injectable } from 'tsyringe';
+import { NotFound } from '../errors';
 import { IUserRepository } from '../repository/IUserRepository';
 
 interface IGetUserUseCase {
@@ -15,7 +16,13 @@ class GetUserUseCase implements IUseCase<IGetUserUseCase, User> {
     ) { }
 
     async invoke(payload: IGetUserUseCase): Promise<User> {
-        return this.userRepository.get(payload.email);
+        const user = await this.userRepository.get(payload.email);
+
+        if (!user) {
+            throw new NotFound('User not found');
+        }
+
+        return user;
     }
 }
 

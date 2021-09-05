@@ -33,9 +33,13 @@
           ]
     },
     "settings": {
+        "import/parsers": {
+            "@typescript-eslint/parser": [".ts", ".tsx"]
+        },
         "import/resolver": {
             "typescript": {
-                "paths": ["src", "node_modules/@types", "node_modules"]
+                "alwaysTryTypes": true,
+                "paths": "./tsconfig.json"
             }
         }
     }

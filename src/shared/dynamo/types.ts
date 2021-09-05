@@ -1,7 +1,7 @@
 import * as DynamoDB from 'aws-sdk/clients/dynamodb';
 
 export type QueryOptions = {
-    userSortKeyIndex: boolean;
+    userSortKeyIndex?: boolean;
 }
 
 export type QueryRequest = Omit<DynamoDB.DocumentClient.QueryInput, 'TableName' | 'IndexName'>;
