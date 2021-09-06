@@ -4,18 +4,18 @@ import { inject, injectable } from 'tsyringe';
 import { NotFound } from '../../../shared/errors';
 import type { IUserRepository } from '../repository/IUserRepository';
 
-interface IGetUserUseCase {
+interface IGetUserUseCasePayload {
     email: string;
 }
 
 @injectable()
-class GetUserUseCase implements IUseCase<IGetUserUseCase, User> {
+class GetUserUseCase implements IUseCase<IGetUserUseCasePayload, User> {
     constructor(
         @inject('UserRepository')
         private userRepository: IUserRepository,
     ) { }
 
-    async invoke(payload: IGetUserUseCase): Promise<User> {
+    async invoke(payload: IGetUserUseCasePayload): Promise<User> {
         const user = await this.userRepository.get(payload.email);
 
         if (!user) {
