@@ -1,4 +1,4 @@
-import { DynamoConstants, DynamoProvider } from '@shared/dynamo';
+import { DynamoConstants, DynamoProvider } from '@shared/services/dynamo';
 import User from '@shared/models/User';
 import { CognitoProvider } from '@shared/services/cognito/CognitoProvider';
 import { inject, injectable } from 'tsyringe';
