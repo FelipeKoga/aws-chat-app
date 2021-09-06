@@ -20,13 +20,15 @@ class CreateUserUseCase implements IUseCase<ICreateUserPayload, User> {
     ) { }
 
     async invoke(payload: ICreateUserPayload): Promise<User> {
-        const foundUser = await this.getUserUseCase.invoke({ email: payload.email });
+        const foundUser: User | null = await this.getUserUseCase
+            .invoke({ email: payload.email })
+            .catch(() => null);
 
         if (foundUser) {
             throw new UserAlreadyExists('User already exists.');
         }
 
-        const hasCreated = this.userRepository.create(payload);
+        const hasCreated = await this.userRepository.create(payload);
 
         if (!hasCreated) {
             throw new UnknowError('Error when registering the user.');
