@@ -1,8 +1,8 @@
 import { IUseCase } from '@shared/IUseCase';
 import User from '@shared/models/User';
 import { inject, injectable } from 'tsyringe';
-import { NotFound } from '../errors';
-import { IUserRepository } from '../repository/IUserRepository';
+import { NotFound } from '../../../shared/errors';
+import type { IUserRepository } from '../repository/IUserRepository';
 
 interface IGetUserUseCase {
     email: string;

@@ -6,7 +6,7 @@ import { container } from 'tsyringe';
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 import { formatResponse } from '@shared/apiGatewayResponse';
 import { CreateUserUseCase, GetUserUseCase } from './usecases';
-import { BaseError } from './errors';
+import { BaseError } from '../../shared/errors';
 
 const createUser = async (body: string): Promise<APIGatewayProxyResult> => {
     const { email, name } = JSON.parse(body);
@@ -43,12 +43,12 @@ export const handle = async (event: APIGatewayProxyEvent): Promise<APIGatewayPro
         return response;
     } catch (exception) {
         if (exception instanceof BaseError) {
-            const { statusCode, name, message } = exception;
+            const { statusCode, code, message } = exception;
 
             return formatResponse({
                 statusCode,
                 body: {
-                    name,
+                    code,
                     message,
                 },
             });

@@ -2,14 +2,13 @@ import { IUseCase } from '@shared/IUseCase';
 import User from '@shared/models/User';
 import { inject, injectable } from 'tsyringe';
 import { GetUserUseCase } from './GetUserUseCase';
-import { UnknowError, UserAlreadyExists } from '../errors';
-import { IUserRepository } from '../repository/IUserRepository';
+import { UnknowError, UserAlreadyExists } from '../../../shared/errors';
+import type { IUserRepository } from '../repository/IUserRepository';
 
 interface ICreateUserPayload {
     name: string;
     email: string;
 }
-
 @injectable()
 class CreateUserUseCase implements IUseCase<ICreateUserPayload, User> {
     constructor(

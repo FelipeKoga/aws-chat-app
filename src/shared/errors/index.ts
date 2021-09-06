@@ -3,26 +3,26 @@
 export class BaseError extends Error {
     statusCode: number;
 
-    constructor(statusCode: number, message: string) {
+    code: string;
+
+    constructor(statusCode: number, code: string, message: string) {
         super(message);
         this.statusCode = statusCode;
+        this.code = code;
     }
 }
 export class UserAlreadyExists extends BaseError {
     constructor(message: string) {
-        super(409, message);
-        this.name = 'UserAlreadyExists';
+        super(409, 'UserAlreadyExists', message);
     }
 }
 export class NotFound extends BaseError {
     constructor(message: string) {
-        super(404, message);
-        this.name = 'NotFound';
+        super(404, 'NotFound', message);
     }
 }
 export class UnknowError extends BaseError {
     constructor(message: string) {
-        super(500, message);
-        this.name = 'UnknowError';
+        super(500, 'UnknowError', message);
     }
 }

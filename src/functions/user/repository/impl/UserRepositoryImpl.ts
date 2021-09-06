@@ -1,5 +1,6 @@
 import { DynamoConstants, DynamoProvider } from '@shared/dynamo';
 import User from '@shared/models/User';
+import { CognitoProvider } from '@shared/services/cognito/CognitoProvider';
 import { inject, injectable } from 'tsyringe';
 import { IUserRepository } from '../IUserRepository';
 
@@ -11,16 +12,23 @@ function getUserKeys(email: string): { pk: string, sk: string } {
 }
 @injectable()
 class UserRepositoryImpl implements IUserRepository {
-    constructor(@inject('DynamoProvider') private dynamoResolver: DynamoProvider) { }
+    constructor(
+        @inject('DynamoProvider') private dynamoProvider: DynamoProvider,
+        @inject('CognitoProvider') private cognitoProvider: CognitoProvider,
+    ) { }
 
     get(email: string): Promise<User> {
-        return this.dynamoResolver.get<User>(getUserKeys(email));
+        return this.dynamoProvider.get<User>(getUserKeys(email));
     }
 
-    create(user: User): Promise<boolean> {
-        return this.dynamoResolver.create({
+    async create(user: User): Promise<boolean> {
+        const { email, password, name } = user;
+
+        await this.cognitoProvider.create({ email, password, name });
+
+        return this.dynamoProvider.create({
             ...user,
-            ...getUserKeys(user.email),
+            ...getUserKeys(email),
         });
     }
 }

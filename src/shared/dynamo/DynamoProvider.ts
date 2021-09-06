@@ -1,4 +1,4 @@
-import * as DynamoDB from 'aws-sdk/clients/dynamodb';
+import { DocumentClient } from 'aws-sdk/clients/dynamodb';
 import { container } from 'tsyringe';
 import { DynamoConstants } from './constants';
 import {
@@ -6,10 +6,10 @@ import {
 } from './types';
 
 class DynamoProvider {
-    private client: DynamoDB.DocumentClient;
+    private client: DocumentClient;
 
     constructor() {
-        this.client = new DynamoDB.DocumentClient();
+        this.client = new DocumentClient();
     }
 
     async query<Response>(params: QueryRequest, options: QueryOptions): Promise<Response[]> {
