@@ -11,7 +11,7 @@ function getUserKeys(email: string): { pk: string, sk: string } {
     };
 }
 @injectable()
-class UserRepositoryImpl implements IUserRepository {
+class UserRepository implements IUserRepository {
     constructor(
         @inject('DynamoProvider') private dynamoProvider: DynamoProvider,
         @inject('CognitoProvider') private cognitoProvider: CognitoProvider,
@@ -38,4 +38,4 @@ class UserRepositoryImpl implements IUserRepository {
     }
 }
 
-export { UserRepositoryImpl };
+export { UserRepository };

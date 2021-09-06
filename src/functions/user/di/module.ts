@@ -1,10 +1,10 @@
 import { container } from 'tsyringe';
-import { UserRepositoryImpl } from '../repository/impl/UserRepositoryImpl';
+import { UserRepository } from '../repository/impl/UserRepository';
 import { IUserRepository } from '../repository/IUserRepository';
 import { GetUserUseCase } from '../usecases';
 
 container.registerSingleton<IUserRepository>(
-    'UserRepository', UserRepositoryImpl,
+    'UserRepository', UserRepository,
 );
 
 container.registerSingleton<GetUserUseCase>(
