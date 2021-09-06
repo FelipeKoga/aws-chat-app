@@ -3,7 +3,7 @@ import './di/module';
 
 import { container } from 'tsyringe';
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
-import { formatResponse } from '@shared/apiGatewayResponse';
+import { formatResponse } from '@shared/utils/apiGatewayResponse';
 import { CreateUserUseCase, GetUserUseCase } from './usecases';
 import { BaseError } from '../../shared/errors';
 

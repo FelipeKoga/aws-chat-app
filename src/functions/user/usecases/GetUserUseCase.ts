@@ -1,4 +1,4 @@
-import { IUseCase } from '@shared/IUseCase';
+import { IUseCase } from '@shared/utils/IUseCase';
 import User from '@shared/models/User';
 import { inject, injectable } from 'tsyringe';
 import { NotFound } from '../../../shared/errors';
