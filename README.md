@@ -11,7 +11,7 @@
 
 ### Features
 
--   [ ] Registration
+-   [x] Registration
 -   [ ] Start a conversation
 -   [ ] Notifications
 -   [ ] Private groups
