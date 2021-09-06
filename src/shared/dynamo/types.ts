@@ -6,6 +6,6 @@ export type QueryOptions = {
 
 export type QueryRequest = Omit<DynamoDB.DocumentClient.QueryInput, 'TableName' | 'IndexName'>;
 
-export type PutItemRequest= { pk: string, sk: string, [item: string]: string };
+export type PutItemRequest= { pk: string, sk: string, [item: string]: any };
 
 export type GetItemRequest = { pk: string, sk: string }

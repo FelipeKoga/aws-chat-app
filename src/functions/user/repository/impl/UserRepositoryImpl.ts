@@ -22,13 +22,18 @@ class UserRepositoryImpl implements IUserRepository {
     }
 
     async create(user: User): Promise<boolean> {
-        const { email, password, name } = user;
+        const {
+            email, password, name, ...values
+        } = user;
 
         await this.cognitoProvider.create({ email, password, name });
 
         return this.dynamoProvider.create({
-            ...user,
             ...getUserKeys(email),
+            ...values,
+            email,
+            name,
+            registeredAt: Date.now(),
         });
     }
 }

@@ -8,6 +8,7 @@ import type { IUserRepository } from '../repository/IUserRepository';
 interface ICreateUserPayload {
     name: string;
     email: string;
+    password: string;
 }
 @injectable()
 class CreateUserUseCase implements IUseCase<ICreateUserPayload, User> {
@@ -28,7 +29,9 @@ class CreateUserUseCase implements IUseCase<ICreateUserPayload, User> {
             throw new UserAlreadyExists('User already exists.');
         }
 
-        const hasCreated = await this.userRepository.create(payload);
+        const hasCreated = await this.userRepository.create(
+            new User({ ...payload }),
+        );
 
         if (!hasCreated) {
             throw new UnknowError('Error when registering the user.');

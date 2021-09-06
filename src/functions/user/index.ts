@@ -1,4 +1,3 @@
-import User from '@shared/models/User';
 import 'reflect-metadata';
 import './di/module';
 
@@ -9,13 +8,11 @@ import { CreateUserUseCase, GetUserUseCase } from './usecases';
 import { BaseError } from '../../shared/errors';
 
 const createUser = async (body: string): Promise<APIGatewayProxyResult> => {
-    const { email, name } = JSON.parse(body);
+    const { email, name, password } = JSON.parse(body);
 
     const createUserUseCase = container.resolve(CreateUserUseCase);
 
-    const user = new User({ email, name });
-
-    await createUserUseCase.invoke(user);
+    const user = await createUserUseCase.invoke({ name, email, password });
 
     return formatResponse({ statusCode: 201, body: user });
 };
