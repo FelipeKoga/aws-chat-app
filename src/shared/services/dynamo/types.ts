@@ -8,4 +8,4 @@ export type QueryRequest = Omit<DynamoDB.DocumentClient.QueryInput, 'TableName' 
 
 export type PutItemRequest= { pk: string, sk: string, [item: string]: any };
 
-export type GetItemRequest = { pk: string, sk: string }
+export type ItemRequest = { pk: string, sk: string }

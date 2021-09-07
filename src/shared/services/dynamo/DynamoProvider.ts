@@ -2,9 +2,12 @@ import { DocumentClient } from 'aws-sdk/clients/dynamodb';
 import { container } from 'tsyringe';
 import { DynamoConstants } from './constants';
 import {
-    GetItemRequest, PutItemRequest, QueryOptions, QueryRequest,
+    ItemRequest, PutItemRequest, QueryOptions, QueryRequest,
 } from './types';
 
+export function extractValueFromKey(key: string): string {
+    return key.split('#')[1];
+}
 class DynamoProvider {
     private client: DocumentClient;
 
@@ -16,7 +19,12 @@ class DynamoProvider {
         const response = await this.client.query({
             ...params,
             TableName: DynamoConstants.TableName,
-            IndexName: options.userSortKeyIndex ? DynamoConstants.Indexes.sortKey : undefined,
+            KeyConditionExpression: options.userSortKeyIndex
+                ? DynamoConstants.Query.bySortKey
+                : DynamoConstants.Query.byPartitionKey,
+            IndexName: options.userSortKeyIndex
+                ? DynamoConstants.Indexes.sortKey
+                : undefined,
         }).promise();
 
         return response.Items as Response[];
@@ -30,18 +38,31 @@ class DynamoProvider {
             }).promise();
 
             return true;
-        } catch {
+        } catch (e) {
             return false;
         }
     }
 
-    async get<Response>(key: GetItemRequest): Promise<Response> {
+    async get<Response>(key: ItemRequest): Promise<Response> {
         const response = await this.client.get({
             Key: key,
             TableName: DynamoConstants.TableName,
         }).promise();
 
         return response.Item as Response;
+    }
+
+    async delete(key: ItemRequest): Promise<boolean> {
+        try {
+            await this.client.delete({
+                TableName: DynamoConstants.TableName,
+                Key: key,
+            }).promise();
+
+            return true;
+        } catch (e) {
+            return false;
+        }
     }
 }
 
