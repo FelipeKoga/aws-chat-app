@@ -15,14 +15,14 @@ class DynamoProvider {
         this.client = new DocumentClient();
     }
 
-    async query<Response>(params: QueryRequest, options: QueryOptions): Promise<Response[]> {
+    async query<Response>(params: QueryRequest, options?: QueryOptions): Promise<Response[]> {
         const response = await this.client.query({
             ...params,
             TableName: DynamoConstants.TableName,
-            KeyConditionExpression: options.userSortKeyIndex
+            KeyConditionExpression: options?.userSortKeyIndex
                 ? DynamoConstants.Query.bySortKey
                 : DynamoConstants.Query.byPartitionKey,
-            IndexName: options.userSortKeyIndex
+            IndexName: options?.userSortKeyIndex
                 ? DynamoConstants.Indexes.sortKey
                 : undefined,
         }).promise();
