@@ -35,3 +35,17 @@ Resources:
                       Resource: '*'
             Roles:
                 - !Ref CognitoDataRole
+    WebSocketPolicy:
+        Type: AWS::IAM::Policy
+        Properties:
+            PolicyName: websocket-policy
+            PolicyDocument:
+                Version: '2012-10-17'
+                Statement:
+                    - Effect: Allow
+                      Action:
+                          - execute-api:ManageConnections
+                      Resource:
+                          - arn:aws:execute-api:*:*:*/@connections/*
+            Roles:
+                - !Ref WebSocketDataRole
