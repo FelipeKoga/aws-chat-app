@@ -6,7 +6,7 @@ interface IWebSocketRepository {
 
     disconnect(connectionId: string, email: string): Promise<void>
 
-    postMessage(): Promise<void>
+    postMessage(emails: string[], data: any): Promise<void>
 
 }
 

@@ -3,21 +3,20 @@ import { verifyCognitoToken } from '@functions/websocket-handler/utils/verifyCog
 import { inject, injectable } from 'tsyringe';
 import type { IWebSocketRepository } from '../repository/IWebSocketRepository';
 
-interface IConnectUseCasePayload {
+type ConnectUseCasePayload = {
     connectionId: string;
     connectedAt: number;
     token: string;
 }
 
 @injectable()
-class ConnectUseCase implements IUseCase<IConnectUseCasePayload, void> {
+class ConnectUseCase implements IUseCase<ConnectUseCasePayload, void> {
     constructor(
         @inject('WebSocketRepository')
         private webSocketRepository: IWebSocketRepository,
     ) { }
 
-    async invoke(payload: IConnectUseCasePayload): Promise<void> {
-        const { token, connectionId, connectedAt } = payload;
+    async invoke({ token, connectionId, connectedAt }: ConnectUseCasePayload): Promise<void> {
         const username = await verifyCognitoToken(token);
 
         await this.webSocketRepository.connect(

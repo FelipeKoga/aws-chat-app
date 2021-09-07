@@ -7,6 +7,11 @@ import { container } from 'tsyringe';
 import { BaseError } from '../../shared/errors';
 import { ConnectUseCase } from './usecases/ConnectUseCase';
 import { DisconnectUseCase } from './usecases/DisconnectUseCase';
+import { PostMessageUseCase } from './usecases/PostMessageUseCase';
+
+type WebSocketHandlerEvent = APIGatewayProxyEvent & {
+    isPostMessageRequest: boolean
+}
 
 const connect = async ({ connectionId, connectedAt, token }): Promise<APIGatewayProxyResult> => {
     const connectUseCase = container.resolve(ConnectUseCase);
@@ -24,8 +29,18 @@ const disconnect = async ({ connectionId }): Promise<APIGatewayProxyResult> => {
     return formatResponse({ statusCode: 200, body: 'disconnected' });
 };
 
+const postMessage = async ({ emails, data }) : Promise<APIGatewayProxyResult> => {
+    const postMessageUseCase = container.resolve(PostMessageUseCase);
+
+    await postMessageUseCase.invoke({ emails, data });
+
+    return formatResponse({ statusCode: 200, body: 'sent' });
+};
+
 export const handle = async (
-    { requestContext, queryStringParameters }: APIGatewayProxyEvent,
+    {
+        requestContext, queryStringParameters, body, isPostMessageRequest,
+    }: WebSocketHandlerEvent,
 ): Promise<APIGatewayProxyResult> => {
     try {
         let response: APIGatewayProxyResult;
@@ -42,6 +57,14 @@ export const handle = async (
 
         if (eventType === 'DISCONNECT') {
             response = await disconnect({ connectionId });
+        }
+
+        if (isPostMessageRequest && body) {
+            response = await postMessage(JSON.parse(body));
+        }
+
+        if (!response) {
+            throw new Error('Method not allowed');
         }
 
         return response;
